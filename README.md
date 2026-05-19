@@ -1,20 +1,22 @@
-# Skambuciu-Srauto-Prognozavimas
+# Skambučių Srauto Prognozavimas
 
 Bakalauro baigiamojo darbo programinis kodas. Repozitorijoje pateikiami keturių prognozavimo modelių (SARIMAX, XGBoost, GRU bei hibridinio ansamblio) Jupyter kodo failai ir pavyzdinis duomenų rinkinys. Tyrimo tikslas – palyginti skirtingų laiko eilučių prognozavimo algoritmų efektyvumą.
 
-## Repozitorijos turinys
+## Repozitorijos struktūra
 
-- **`1_SARIMAX_modelis.ipynb`** – Tradicinio statistinio SARIMAX modelio specifikacijos, treniravimo ir vertinimo kodas.
-- **`2_XGBoost_modelis.ipynb`** – Sprendimų medžių ansamblio (XGBoost) kodas, apimantis požymių inžineriją ir hiperparametrų optimizavimą naudojant *Optuna*.
-- **`3_GRU_modelis.ipynb`** – Giliojo mokymosi rekurentinio neuroninio tinklo (GRU) architektūros, duomenų normalizavimo ir mokymo kodas.
-- **`4_Hibridinis_modelis.ipynb`** – Dviejų lygmenų *Stacking* ansamblio kodas, apjungiantis bazinių modelių prognozes taikant neneigiamų mažiausiųjų kvadratų (NNLS) algoritmą.
-- **`duomenys_pavyzdys.csv`** – Pavyzdinis skambučių srautų duomenų rinkinys, skirtas kodo veikimui pademonstruoti ir testuoti. **Svarbu:** Šiame faile rodoma tik bendra duomenų struktūra. Jame esantys skaičiai nėra realūs faktiniai tyrime naudoti duomenys – jie sugeneruoti atsitiktine tvarka (naudojant *random* funkcijas) tik kaip demonstracinis pavyzdys.
+- **`Notebooks/`** – Aplankas, kuriame yra visi Jupyter kodo failai:
+  - `SARIMAX_modelis.ipynb` – Tradicinio statistinio SARIMAX modelio specifikacijos, treniravimo ir vertinimo kodas.
+  - `XGBoost_modelis.ipynb` – Sprendimų medžių ansamblio (XGBoost) kodas, apimantis požymių inžineriją ir hiperparametrų optimizavimą naudojant *Optuna*.
+  - `GRU_modelis.ipynb` – Giliojo mokymosi rekurentinio neuroninio tinklo (GRU) architektūros, duomenų normalizavimo ir mokymo kodas.
+  - `Hibridinis_modelis.ipynb` – Dviejų lygmenų *Stacking* ansamblio kodas, apjungiantis bazinių modelių prognozes taikant neneigiamų mažiausiųjų kvadratų (NNLS) algoritmą.
+- **`Data/`** – Aplankas su duomenimis:
+  - `duomenys_pavyzdys.csv` – Pavyzdinis skambučių srautų duomenų rinkinys, skirtas kodo veikimui pademonstruoti ir testuoti.
+- **`requirements.txt`** – Faile pateikiamos visos projektui naudotos bibliotekos ir tikslios jų versijos.
 
-## Programinė įranga ir priklausomybės
+## Duomenų privatumas ir anonimizavimas
 
-Visi skaičiavimai atlikti `Python 3.11` aplinkoje. Pagrindinės naudotos bibliotekos:
-- **Duomenų apdorojimui:** `pandas`, `numpy`, `scikit-learn`
-- **Modeliavimui:** `statsmodels`, `pmdarima` (SARIMAX), `xgboost`, `optuna` (XGBoost), `tensorflow`, `keras` (GRU), `scipy` (NNLS)
-- **Vizualizacijoms:** `matplotlib`, `seaborn`
+**Svarbu:** Siekiant užtikrinti finansų institucijos konfidencialumą, `Data/` aplanke pateikiami duomenys yra anonimizuoti. Nors bendra duomenų struktūra, laiko dinamika ir sezoniškumas yra pilnai išlaikyti (tam, kad juos būtų galima sėkmingai naudoti modelių mokymui ir testavimui), absoliučios skaitinės reikšmės skiriasi nuo realių faktinių srautų.
 
-Šio darbo programinis kodas buvo kuriamas ir testuojamas **Visual Studio Code (VSCode)** aplinkoje. Norint peržiūrėti ar atkurti rezultatus, failus galima naudoti toje pačioje VSCode aplinkoje (su įdiegtu Jupyter plėtiniu) arba atidaryti per standartines *Jupyter Notebook*, *JupyterLab* ar *Google Colab* platformas.
+Duomenų transformacijai atlikti kiekvienam stebiniui buvo pritaikyta ši „Excel“ formulė (kur X ir Y yra atsitiktinai parinkti sveikieji skaičiai):
+```excel
+=RANDBETWEEN(MAX(1; B2 - X); B2 + Y)
